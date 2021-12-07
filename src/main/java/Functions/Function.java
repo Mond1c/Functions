@@ -22,7 +22,7 @@ public class Function {
 
     public double calculate(double x) {
         double y = 0;
-        for (VariableToken variableToken : variableTokenList) y += variableToken.getFactor() * x;
+        for (VariableToken variableToken : variableTokenList) y += variableToken.calculate(x);
         for (ConstantToken constantToken : constantTokenList) y += constantToken.calculate();
         return y;
     }

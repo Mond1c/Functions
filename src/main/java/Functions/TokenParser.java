@@ -6,9 +6,10 @@ public class TokenParser {
     }
 
     public static VariableToken parseVariable(String s) {
-        String str = "";
-        for (int i = 0; s.charAt(i) != 'x'; ++i) str += s.charAt(i);
-        return parseLinearToken(str);
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; s.charAt(i) != 'x'; ++i) str.append(s.charAt(i));
+        if (s.contains("^")) return parseQuadraticToken(str.toString());
+        return parseLinearToken(str.toString());
     }
 
     private static Number parseNumber(String s) {
@@ -19,5 +20,9 @@ public class TokenParser {
 
     private static LinearToken parseLinearToken(String s) {
         return new LinearToken(parseConstant(s));
+    }
+
+    private static QuadraticToken parseQuadraticToken(String s) {
+        return new QuadraticToken(parseConstant(s));
     }
 }
