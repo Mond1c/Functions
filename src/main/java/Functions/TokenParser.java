@@ -8,7 +8,7 @@ public class TokenParser {
     public static VariableToken parseVariable(String s) {
         StringBuilder str = new StringBuilder();
         for (int i = 0; s.charAt(i) != 'x'; ++i) str.append(s.charAt(i));
-        if (s.contains("^")) return parseQuadraticToken(str.toString());
+        if (s.contains("^")) return parseQuadraticToken(str.toString(), s);
         return parseLinearToken(str.toString());
     }
 
@@ -22,7 +22,14 @@ public class TokenParser {
         return new LinearToken(parseConstant(s));
     }
 
-    private static QuadraticToken parseQuadraticToken(String s) {
-        return new QuadraticToken(parseConstant(s));
+    private static PowerToken parseQuadraticToken(String s, String exp) {
+        StringBuilder str = new StringBuilder();
+        boolean isPower = false;
+        for (int i = 0; i < exp.length(); ++i) {
+            if (exp.charAt(i) == '^') isPower = true;
+            else if (isPower) str.append(exp.charAt(i));
+        }
+        System.out.println(str.toString() + " " + s);
+        return new PowerToken(parseConstant(s), Double.parseDouble(str.toString()));
     }
 }

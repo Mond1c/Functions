@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 
 public class Controller {
     @FXML
@@ -13,6 +16,9 @@ public class Controller {
 
     @FXML
     private TextField textField;
+
+    private static final double moveSpeed = 10;
+    private boolean moved = false;
 
     @FXML
     public void buttonDrawClicked() {
@@ -41,5 +47,42 @@ public class Controller {
     public void buttonClearClicked() {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+    @FXML
+    public void canvasScroll(ScrollEvent event) {
+        double zoomFactor = 1.05;
+        double deltaY = event.getDeltaY();
+        if (deltaY < 0) zoomFactor = 2.0 - zoomFactor;
+        if (canvas.getScaleY() < 1 && deltaY < 0) return;
+        canvas.setScaleX(canvas.getScaleX() * zoomFactor);
+        canvas.setScaleY(canvas.getScaleY() * zoomFactor);
+    }
+
+
+    @FXML
+    public void canvasMouseMoved(MouseEvent event) {
+//        if (moved) {
+//            double x = event.getX();
+//            double y = event.getY();
+//            x -= 400;
+//            y *= -1;
+//            y += 400;
+//
+//            if (x < 0) canvas.setTranslateX(-moveSpeed);
+//            else canvas.setTranslateX(moveSpeed);
+//            if (y < 0) canvas.setTranslateY(-moveSpeed);
+//            else canvas.setTranslateY(moveSpeed);
+//        }
+    }
+
+    @FXML
+    public void canvasMouseClicked(MouseEvent event) {
+        moved = true;
+    }
+
+    @FXML
+    public void canvasMouseReleased(MouseEvent event) {
+        moved = false;
     }
 }

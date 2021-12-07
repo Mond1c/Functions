@@ -21,13 +21,16 @@ class LinearToken extends VariableToken {
     }
 }
 
-class QuadraticToken extends VariableToken {
-    public QuadraticToken(ConstantToken constantToken) {
+class PowerToken extends VariableToken {
+    private double power;
+
+    public PowerToken(ConstantToken constantToken, double power) {
         super(constantToken);
+        this.power = power;
     }
 
     @Override
     public double calculate(double x) {
-        return constantToken.calculate() * x * x;
+        return constantToken.calculate() * Math.pow(x, power);
     }
 }
