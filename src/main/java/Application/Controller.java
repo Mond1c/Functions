@@ -6,22 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 
 public class Controller {
+    private static final float ZOOMFACTOR = 1.05f;
+
     @FXML
     private Canvas canvas;
 
     @FXML
     private TextField textField;
 
-    private static final double moveSpeed = 10;
-    private boolean moved = false;
-
     @FXML
-    public void buttonDrawClicked() {
+    private void buttonDrawClicked() {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         double width = canvas.getWidth();
         double height = canvas.getHeight();
@@ -44,14 +41,14 @@ public class Controller {
     }
 
     @FXML
-    public void buttonClearClicked() {
+    private void buttonClearClicked() {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     @FXML
-    public void canvasScroll(ScrollEvent event) {
-        double zoomFactor = 1.05;
+    private void canvasScroll(ScrollEvent event) {
+        double zoomFactor = ZOOMFACTOR;
         double deltaY = event.getDeltaY();
         if (deltaY < 0) zoomFactor = 2.0 - zoomFactor;
         if (canvas.getScaleY() < 1 && deltaY < 0) return;
@@ -59,30 +56,4 @@ public class Controller {
         canvas.setScaleY(canvas.getScaleY() * zoomFactor);
     }
 
-
-    @FXML
-    public void canvasMouseMoved(MouseEvent event) {
-//        if (moved) {
-//            double x = event.getX();
-//            double y = event.getY();
-//            x -= 400;
-//            y *= -1;
-//            y += 400;
-//
-//            if (x < 0) canvas.setTranslateX(-moveSpeed);
-//            else canvas.setTranslateX(moveSpeed);
-//            if (y < 0) canvas.setTranslateY(-moveSpeed);
-//            else canvas.setTranslateY(moveSpeed);
-//        }
-    }
-
-    @FXML
-    public void canvasMouseClicked(MouseEvent event) {
-        moved = true;
-    }
-
-    @FXML
-    public void canvasMouseReleased(MouseEvent event) {
-        moved = false;
-    }
 }

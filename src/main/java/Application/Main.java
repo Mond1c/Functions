@@ -2,7 +2,6 @@ package Application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,6 +12,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         fxmlLoader.setController(new Controller());
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
+        scene.getRoot().requestFocus();
         stage.setTitle("Functions");
         stage.setScene(scene);
         stage.show();

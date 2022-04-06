@@ -1,6 +1,8 @@
 package Functions;
 
 public class TokenParser {
+    private static final Character POWERSYMBOL = '^';
+
     public static ConstantToken parseConstant(String s) {
         return parseNumber(s);
     }
@@ -8,7 +10,7 @@ public class TokenParser {
     public static VariableToken parseVariable(String s) {
         StringBuilder str = new StringBuilder();
         for (int i = 0; s.charAt(i) != 'x'; ++i) str.append(s.charAt(i));
-        if (s.contains("^")) return parseQuadraticToken(str.toString(), s);
+        if (s.contains(POWERSYMBOL.toString())) return parseQuadraticToken(str.toString(), s);
         return parseLinearToken(str.toString());
     }
 
@@ -26,10 +28,9 @@ public class TokenParser {
         StringBuilder str = new StringBuilder();
         boolean isPower = false;
         for (int i = 0; i < exp.length(); ++i) {
-            if (exp.charAt(i) == '^') isPower = true;
+            if (exp.charAt(i) == POWERSYMBOL) isPower = true;
             else if (isPower) str.append(exp.charAt(i));
         }
-        System.out.println(str.toString() + " " + s);
         return new PowerToken(parseConstant(s), Double.parseDouble(str.toString()));
     }
 }
